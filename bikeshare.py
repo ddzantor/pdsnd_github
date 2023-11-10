@@ -145,3 +145,63 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+def get_filters():
+    print('Hello! Let\'s explore some US bikeshare data!')
+
+    # City input validation
+    while True:
+        try:
+            city = input('Enter city (Chicago, New York City, Washington): ').lower()
+            if city in CITY_DATA:
+                break
+            else:
+                raise ValueError('Invalid input. Please enter a valid city.')
+        except ValueError as e:
+            print(e)
+
+    # Month input validation
+    while True:
+        try:
+            month = input('Enter month (all, January, February, March, April, May, June): ').lower()
+            if month in ['all', 'january', 'february', 'march', 'april', 'may', 'june']:
+                break
+            else:
+                raise ValueError('Invalid input. Please enter a valid month.')
+        except ValueError as e:
+            print(e)
+
+    # Day input validation
+    while True:
+        try:
+            day = input('Enter day of the week (all, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday): ').lower()
+            if day in ['all', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']:
+                break
+            else:
+                raise ValueError('Invalid input. Please enter a valid day of the week.')
+        except ValueError as e:
+            print(e)
+
+    print('-'*40)
+    return city, month, day
+
+def time_stats(df):
+    print('\nCalculating The Most Frequent Times of Travel...\n')
+    start_time = time.time()
+
+    time_units = {
+        'Month': 'month',
+        'Day of Week': 'day of week',
+        'Hour': 'start hour'
+    }
+
+    for unit, label in time_units.items():
+        df[unit] = df['Start Time'].dt.__getattribute__(label)
+
+    for unit in time_units:
+        common_unit = df[unit].mode()[0]
+        print(f'Most Common {unit}: {common_unit}')
+
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('-'*40)
+
