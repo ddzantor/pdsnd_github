@@ -145,3 +145,54 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# Function to calculate the mean travel time
+def mean_travel_time(travel_times):
+    """
+    Calculate the mean travel time from a list of travel times.
+
+    Args:
+        travel_times (list): A list of integers representing travel times in seconds.
+
+    Returns:
+        float: The mean travel time in seconds.
+    """
+    total_travel_time = sum(travel_times)
+    mean_time = total_travel_time / len(travel_times)
+    return mean_time
+
+# Function to display user stats
+def user_stats(df):
+    """
+    Calculate and display user statistics based on the given DataFrame.
+
+    Args:
+        df (pd.DataFrame): DataFrame containing bikeshare data.
+
+    Prints:
+        Various user statistics including gender distribution and birth year information.
+    """
+    print('\nCalculating User Stats...\n')
+    start_time = time.time()
+
+    # Gender distribution
+    if 'Gender' in df:
+        print('Gender Distribution:\n', df['Gender'].value_counts())
+    else:
+        print('Gender data not available for this city.')
+
+    # Birth year information
+    if 'Birth Year' in df:
+        earliest_birth_year = int(df['Birth Year'].min())
+        most_recent_birth_year = int(df['Birth Year'].max())
+        most_common_birth_year = int(df['Birth Year'].mode()[0])
+
+        print('Earliest Birth Year:', earliest_birth_year)
+        print('Most Recent Birth Year:', most_recent_birth_year)
+        print('Most Common Birth Year:', most_common_birth_year)
+    else:
+        print('Birth Year data not available for this city.')
+
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('-'*40)
